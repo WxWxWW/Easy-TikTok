@@ -19,7 +19,7 @@ public class MoviesApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        //获取应用上下文
         context = getApplicationContext();
 
         String clientkey = "aw5x8c7fh8dcrwnz"; // 需要到开发者网站申请并替换
