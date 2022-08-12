@@ -7,9 +7,34 @@
     android:layout_height="match_parent"
     tools:context=".utils.WebActivity">
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/edit_type"
+            android:hint="影视类型"
+            android:inputType="number"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/edit_version"
+            android:hint="版本"
+            android:inputType="number"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
     <Button
         android:id="@+id/send_request"
         android:text="发送网络请求"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/TikTok_auth"
+        android:text="抖音授权"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

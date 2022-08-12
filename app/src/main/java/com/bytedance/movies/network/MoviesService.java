@@ -3,6 +3,7 @@ package com.bytedance.movies.network;
 import java.util.List;
 
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -20,24 +21,24 @@ public interface MoviesService {
     //获取榜单信息
     @Headers({"Content-Type: application/json"})
     @GET("/discovery/ent/rank/item/")
-    public Call<RequestBody> getMoviesData(@Header("access-token") String accessToken,
-                                           @Query("type") int type,
-                                           @Query("version") int version);
+    public Call<ResponseBody> getMoviesData(@Header("access-token") String accessToken,
+                                            @Query("type") int type,
+                                            @Query("version") int version);
 
     @Headers({"Content-Type: application/json"})
     @GET("/discovery/ent/rank/item/")
-    public Call<RequestBody> getMoviesData(@Header("access-token") String accessToken,
+    public Call<ResponseBody> getMoviesData(@Header("access-token") String accessToken,
                                            @Query("type") int type);
     //获取榜单版本
     @Headers({"Content-Type: application/json"})
     @GET("/discovery/ent/rank/version/")
-    public Call<RequestBody> getMoviesDataVersion(@Header("access-token") String accessToken,
+    public Call<ResponseBody> getMoviesDataVersion(@Header("access-token") String accessToken,
                                                   @Query("type") int type,
                                                   @Query("cursor") long cursor,
                                                   @Query("count") long count);
     @Headers({"Content-Type: application/json"})
     @GET("/discovery/ent/rank/version/")
-    public Call<RequestBody> getMoviesDataVersion(@Header("access-token") String accessToken,
+    public Call<ResponseBody> getMoviesDataVersion(@Header("access-token") String accessToken,
                                                   @Query("type") int type,
                                                   @Query("count") long count);
 }

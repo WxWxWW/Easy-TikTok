@@ -3,18 +3,14 @@ package com.bytedance.movies.base;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.annotation.IdRes;
-import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewbinding.ViewBinding;
-import androidx.viewbinding.ViewBindings;
 
 import com.bytedance.movies.utils.LogUtil;
 
@@ -22,35 +18,41 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 
 /**
- * @Classname BaseActivity
+ * @Classname BaseFragment
  * @Description: TODO
  * @Created by 康斯坦丁
- * @Date 2022/8/10 21:50
+ * @Date 2022/8/12 16:43
  */
-public abstract class BaseActivity<VM extends ViewModel,VB extends ViewBinding>
-        extends AppCompatActivity {
-
+public abstract class BaseFragment<VM extends ViewModel,VB extends ViewBinding> extends Fragment {
     //如果不绑定则可以默认传递BaseViewModel
-    private VM viewModel;
+    protected VM viewModel;
     //如果不绑定则可以默认传递BaseViewBinding
-    private VB viewBinding;
+    protected VB viewBinding;
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        viewBinding = onCreateViewBinding(getLayoutInflater());
-        setContentView(viewBinding.getRoot());
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        viewBinding = onCreateViewBinding(inflater,container);
         viewModel = ViewModelProviders.of(this).get(onViewModel());
+        return viewBinding.getRoot();
     }
 
-    protected abstract VB onCreateViewBinding(@NonNull LayoutInflater layoutInflater);
     protected abstract Class<VM> onViewModel();
+
+    protected abstract VB onCreateViewBinding(@NonNull LayoutInflater inflater,@Nullable ViewGroup container);
 
     public VB getViewBinding() {
         return viewBinding;
     }
 
-    public VM getViewModel() {
+    public VM getViewModel(){
         return viewModel;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        viewBinding = null;
     }
 }
