@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +14,10 @@ import com.bytedance.entities.Movie;
 import com.bytedance.movies.R;
 
 import java.util.List;
+
+import cn.hutool.core.date.LocalDateTimeUtil;
+import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.util.NumberUtil;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>{
 
@@ -36,7 +39,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        Toast.makeText(context, "no yet implememt!", Toast.LENGTH_SHORT).show();
+        holder.setMovie(data.get(position));
+        holder.init();
     }
 
     @Override
@@ -56,7 +60,13 @@ class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
     private TextView movieYear;
     private TextView movieHot;
     private Button movieBuy;
+    private Movie movie;
+    private View rootView;
 
+    public MovieViewHolder setMovie(Movie movie) {
+        this.movie = movie;
+        return this;
+    }
 
     public MovieViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -68,10 +78,46 @@ class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
         movieYear = (TextView) itemView.findViewById(R.id.movie_year);
         movieHot = (TextView) itemView.findViewById(R.id.movie_hot);
         movieBuy = (Button) itemView.findViewById(R.id.movie_buy);
+        rootView = itemView;
     }
 
     @Override
     public void onClick(View v) {
+    }
 
+    public void init() {
+        movieTitle.setText(movie.getName());
+        List<String> areas = movie.getAreas();
+        movieDouban.setText(stringSplit(areas));
+        List<String> tags = movie.getTags();
+        movieType.setText(stringSplit(tags));
+        String date = movie.getRelease_date();
+        if(date!=null)
+        movieYear.setText(date.substring(0,Math.min(4,date.length())));
+        double v = NumberUtil.parseDouble(movie.getHot());
+        movieHot.setText(readDouble(v));
+
+    }
+    private String stringSplit(List<String> ls){
+        if(ArrayUtil.isEmpty(ls)) return "";
+        StringBuilder builder = new StringBuilder(ls.get(0));
+        for(int i=1;i<ls.size();i++){
+            builder.append(" / "+ls.get(i));
+        }
+        return builder.toString();
+    }
+
+    private String readDouble(double v){
+        String pw = "";
+        if(v>1e12){
+            pw="万亿";
+        } else if(v>1e8){
+            pw="亿";
+        } else if(v>1e4){
+            pw="万";
+        } else {
+            return ""+v;
+        }
+        return (""+v).substring(0,3)+pw;
     }
 }

@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.bytedance.movies.R;
 
+
 public class TestMovieActivity extends AppCompatActivity {
 
     @Override
