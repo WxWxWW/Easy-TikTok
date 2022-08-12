@@ -7,7 +7,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <queries>
-        <!--允许查询抖音和抖音极速版的信息-->
+
+        <!-- 允许查询抖音和抖音极速版的信息 -->
         <package android:name="com.ss.android.ugc.aweme" />
         <package android:name="com.ss.android.ugc.aweme.lite" />
     </queries>
@@ -21,11 +22,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Movies">
         <activity
+            android:name=".activity.TestMovieActivity"
+            android:exported="false" />
+        <activity
             android:name=".douyinapi.DouYinEntryActivity"
+            android:exported="true"
             android:launchMode="singleTask"
-            android:taskAffinity="com.bytedance.movies"
-            android:exported="true">
-        </activity>
+            android:taskAffinity="com.bytedance.movies"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -52,7 +55,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
     </application>
 

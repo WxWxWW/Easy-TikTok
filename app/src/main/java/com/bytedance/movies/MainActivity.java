@@ -15,12 +15,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
 import com.bytedance.movies.R;
+import com.bytedance.movies.activity.TestMovieActivity;
 import com.bytedance.movies.utils.UriUtil;
 import com.bytedance.sdk.open.aweme.authorize.model.Authorization;
 import com.bytedance.sdk.open.aweme.base.ImageObject;
@@ -43,8 +45,13 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        startActivity(new Intent(this, TestMovieActivity.class));
+    }
 
-    public static final String CODE_KEY = "code";
+    /*public static final String CODE_KEY = "code";
     public static Boolean isBoe = false;
 
     DouYinOpenApi douYinOpenApi;
@@ -433,5 +440,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return result;
-    }
+    }*/
+
 }

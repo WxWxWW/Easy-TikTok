@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
@@ -14,15 +13,16 @@
         android:text="Hello World!" />
 
     <ImageView
+        android:id="@+id/title_screen_imageview"
         android:layout_width="match_parent"
         android:layout_height="144dp"
         android:src="@color/teal_200" />
 
-    <!--    <androidx.recyclerview.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/movie_recyclerview"
             android:layout_width="match_parent"
+            android:layout_marginTop="16dp"
             android:layout_height="0dp"
             android:layout_weight="1">
-        </androidx.recyclerview.widget.RecyclerView>-->
-
-    <include layout="@layout/movie_info_view" />
+        </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

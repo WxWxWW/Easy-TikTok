@@ -20,4 +20,6 @@
     <string name="share_to_aweme_with_shareid_no_callbacK">启动带shareId无回调</string>
     <string name="share_to_aweme_with_shareid_callback">启动带shareId有回调</string>
     <string name="share_user_file_provider">使用FileProvider=</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

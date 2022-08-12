@@ -42,4 +42,5 @@ dependencies {
     //抖音开发平台SDK
     implementation 'com.bytedance.ies.ugc.aweme:opensdk-china-external:0.1.8.0'
     implementation 'com.bytedance.ies.ugc.aweme:opensdk-common:0.1.8.0'
+    implementation 'com.alibaba:fastjson:1.2.62'
 }

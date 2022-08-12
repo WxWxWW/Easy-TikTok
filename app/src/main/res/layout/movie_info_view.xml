@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     style="@style/margin_16dp_style"
-    android:layout_marginTop="18dp"
-
+    android:paddingTop="8dp"
     android:orientation="horizontal">
 
     <FrameLayout
@@ -16,10 +15,12 @@
         style="@style/margin_8dp_style">
 
         <ImageView
+            android:id="@+id/movie_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@color/teal_200" />
         <ImageView
+            android:id="@+id/movie_hot_image"
             android:layout_width="40dp"
             android:layout_height="18dp"
             android:src="@color/yellow"/>
