@@ -1,6 +1,10 @@
 package com.bytedance.movies.fragment.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -10,16 +14,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.bytedance.entities.Movie;
 import com.bytedance.movies.R;
+import com.bytedance.movies.dao.MovieCacheDao;
 
 import java.util.List;
 
-import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.NumberUtil;
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>{
+public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     private List<Movie> data;
     private Context context;
@@ -33,27 +38,29 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>{
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = View.inflate(context, R.layout.movie_info_view,null);
+        View view = View.inflate(context, R.layout.movie_info_view, null);
         return new MovieViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        holder.setMovie(data.get(position));
-        holder.init();
+        holder.setMovie(data.get(position),position);
+        System.out.println(position);
+
     }
 
     @Override
     public int getItemCount() {
-        return data==null?0:data.size();
+        return data == null ? 0 : data.size();
     }
 }
+
 /**
  * ViewHolder
  */
 class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private ImageView movieImage;
-    private ImageView movieHotImage;
+    private TextView movieHotImage;
     private TextView movieTitle;
     private TextView movieDouban;
     private TextView movieType;
@@ -62,16 +69,35 @@ class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
     private Button movieBuy;
     private Movie movie;
     private View rootView;
+    private Object lock;
 
-    public MovieViewHolder setMovie(Movie movie) {
+    public TextView getMovieHotImage() {
+        return movieHotImage;
+    }
+
+    public void setMovie(Movie movie,int position) {
         this.movie = movie;
-        return this;
+        init();
+        if(position>2) {
+            movieHotImage.setVisibility(View.GONE);
+        }
+        else {
+            movieHotImage.setVisibility(View.VISIBLE);
+            movieHotImage.setText("TOP "+(position+1));
+        }
+    }
+
+    public boolean locked() {
+        return lock != null;
+    }
+    public void lock(){
+        lock = new Object();
     }
 
     public MovieViewHolder(@NonNull View itemView) {
         super(itemView);
         movieImage = (ImageView) itemView.findViewById(R.id.movie_image);
-        movieHotImage = (ImageView) itemView.findViewById(R.id.movie_hot_image);
+        movieHotImage = (TextView) itemView.findViewById(R.id.movie_hot_image);
         movieTitle = (TextView) itemView.findViewById(R.id.movie_title);
         movieDouban = (TextView) itemView.findViewById(R.id.movie_douban);
         movieType = (TextView) itemView.findViewById(R.id.movie_type);
@@ -92,32 +118,53 @@ class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
         List<String> tags = movie.getTags();
         movieType.setText(stringSplit(tags));
         String date = movie.getRelease_date();
-        if(date!=null)
-        movieYear.setText(date.substring(0,Math.min(4,date.length())));
-        double v = NumberUtil.parseDouble(movie.getHot());
+        if (date != null)
+            movieYear.setText(date.substring(0, Math.min(4, date.length())));
+        double v = movie.getHot();
         movieHot.setText(readDouble(v));
+        MovieCacheDao dao = MovieCacheDao.newInstance(rootView.getContext(), "poster");
+        Drawable drawable = dao.getPosterByStringId(movie.getId(), movie.getPoster());
+        if (drawable != null) {
+            movieImage.setImageDrawable(drawable);
+        } else {
+            new Handler().post(() -> {
+                Glide.with(rootView).load(movie.getPoster()).into(movieImage);
+                Drawable dw = dao.getPosterByStringId(movie.getId(), movie.getPoster());
+                if (dw != null) {
+                    movieImage.setImageDrawable(dw);
+                    Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+                    dao.writePosterCache(movie.getId(), dw);
+                }
+            });
+        }
+
 
     }
-    private String stringSplit(List<String> ls){
-        if(ArrayUtil.isEmpty(ls)) return "";
+
+    private String stringSplit(List<String> ls) {
+        if (ArrayUtil.isEmpty(ls)) return "";
         StringBuilder builder = new StringBuilder(ls.get(0));
-        for(int i=1;i<ls.size();i++){
-            builder.append(" / "+ls.get(i));
+        for (int i = 1; i < ls.size(); i++) {
+            builder.append(" / " + ls.get(i));
         }
         return builder.toString();
     }
 
-    private String readDouble(double v){
+    private String readDouble(double v) {
         String pw = "";
-        if(v>1e12){
-            pw="万亿";
-        } else if(v>1e8){
-            pw="亿";
-        } else if(v>1e4){
-            pw="万";
+        if (v > 1e11) {
+            v /= 1e12;
+            pw = "万亿";
+        } else if (v > 1e7) {
+            v /= 1e8;
+            pw = "亿";
+        } else if (v > 1e3) {
+            v /= 1e4;
+            pw = "万";
         } else {
-            return ""+v;
+            return "" + v;
         }
-        return (""+v).substring(0,3)+pw;
+        if (v < 1) return String.format("%.2f%s", v, pw);
+        return String.format("%.1f%s", v, pw);
     }
 }

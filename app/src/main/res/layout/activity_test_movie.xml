@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activity.TestMovieActivity">
-    <fragment
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.bytedance.movies.fragment.MovieListFragment"
-        android:id="@+id/fragment"/>
+        android:orientation="vertical"
+        android:id="@+id/fragment_container"/>
 
 </LinearLayout>

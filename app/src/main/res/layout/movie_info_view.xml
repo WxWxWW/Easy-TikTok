@@ -2,28 +2,29 @@
 
 <!-- layoutInflator.inflate-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/margin_16dp_style"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="@style/margin_16dp_style"
-    android:paddingTop="8dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingTop="8dp">
 
     <FrameLayout
+        style="@style/margin_8dp_style"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
-        style="@style/margin_8dp_style">
+        android:layout_weight="2">
 
         <ImageView
             android:id="@+id/movie_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@color/teal_200" />
-        <ImageView
+
+        <TextView
             android:id="@+id/movie_hot_image"
             android:layout_width="40dp"
             android:layout_height="18dp"
-            android:src="@color/yellow"/>
+            android:background="@color/yellow" />
     </FrameLayout>
 
 
@@ -38,35 +39,48 @@
             android:id="@+id/movie_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:text="Title"
-            android:textStyle="bold"
-            android:textSize="24sp"/>
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/movie_douban"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:text="douban"
-            android:textSize="18sp"/>
+
+            android:textSize="18sp" />
+
         <TextView
             android:id="@+id/movie_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:text="type"
-            android:textSize="18sp"/>
+
+            android:textSize="18sp" />
+
         <TextView
             android:id="@+id/movie_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:text="year"
-            android:textSize="18sp"/>
+
+            android:textSize="18sp" />
+
         <TextView
             android:id="@+id/movie_hot"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="hot"
             android:drawableLeft="@drawable/ic_baseline_thumb_up_24"
-            android:textSize="18sp"/>
+            android:gravity="center"
+            android:singleLine="true"
+
+            android:text="hot"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -76,10 +90,10 @@
         style="@style/margin_8dp_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_weight="2"
         android:backgroundTint="@color/red"
-        android:layout_gravity="center"
         android:text="buy"
-        android:textSize="16dp"/>
+        android:textSize="16dp" />
 
 </LinearLayout>

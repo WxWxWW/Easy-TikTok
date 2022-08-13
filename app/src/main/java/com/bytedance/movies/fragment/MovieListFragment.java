@@ -1,16 +1,16 @@
 package com.bytedance.movies.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -19,7 +19,6 @@ import com.bytedance.movies.R;
 import com.bytedance.movies.fragment.adapter.MovieAdapter;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,6 +31,7 @@ public class MovieListFragment extends Fragment {
     private ImageView titleScreenImageview;
     private RecyclerView recyclerView;
     private List<Movie> movieList;
+    private Context context;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -40,19 +40,16 @@ public class MovieListFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public MovieListFragment() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static MovieListFragment newInstance(List<Movie> movieList, String param2) {
+    public static MovieListFragment newInstance(List<Movie> movieList) {
         MovieListFragment fragment = new MovieListFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, (Serializable) movieList);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,7 +59,7 @@ public class MovieListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             movieList = (List<Movie>) getArguments().getSerializable(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            context = getContext();
         }
     }
 
@@ -82,7 +79,7 @@ public class MovieListFragment extends Fragment {
     private void initRecyclerView() {
         GridLayoutManager manager = new GridLayoutManager(getContext(),1);
         recyclerView.setLayoutManager(manager);
-        test();
+        //test();
 
         MovieAdapter adapter = new MovieAdapter(movieList, getContext());
         recyclerView.setAdapter(adapter);
