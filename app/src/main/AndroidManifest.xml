@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bytedance.movies">
-
+    <!--应获取权限-->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <queries>
-
         <!-- 允许查询抖音和抖音极速版的信息 -->
         <package android:name="com.ss.android.ugc.aweme" />
         <package android:name="com.ss.android.ugc.aweme.lite" />
@@ -21,8 +19,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Movies">
-        <activity
-            android:name=".utils.WebActivity"
+        <service
+            android:name=".service.ClientTokenService"
+            android:enabled="true"
+            android:exported="true"></service>
+        <!--应用启动时的入口activity-->
+        <activity android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,24 +32,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".douyinapi.DouYinEntryActivity"
-            android:exported="true"
-            android:launchMode="singleTask"
-            android:taskAffinity="com.bytedance.movies"></activity>
-        <activity
-            android:name=".MainActivity"
+            android:name=".base.utils.WebActivity"
             android:exported="true">
         </activity>
-
+        <!--sdkDemo-->
+        <activity
+            android:name=".douyindemo.DemoMainActivity"
+            android:exported="true"/>
+        <!--demo授权成功后返回的第三方activity-->
+        <activity
+            android:name=".douyindemo.DouYinEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTask"/>
+        <!--demo广播-->
         <receiver
-            android:name=".StayInDyReceiver"
+            android:name=".douyindemo.StayInDyReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.aweme.opensdk.action.stay.in.dy" />
                 <action android:name="com.aweme.opensdk.action.stay.in.dy.im" />
             </intent-filter>
         </receiver>
-
+        <!--Demo文件持有者-->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.bytedance.movies.fileProvider"

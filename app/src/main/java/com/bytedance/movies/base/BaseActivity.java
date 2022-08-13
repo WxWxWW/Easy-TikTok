@@ -2,24 +2,13 @@ package com.bytedance.movies.base;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 
-import androidx.annotation.IdRes;
-import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewbinding.ViewBinding;
-import androidx.viewbinding.ViewBindings;
-
-import com.bytedance.movies.utils.LogUtil;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.ParameterizedType;
 
 /**
  * @Classname BaseActivity

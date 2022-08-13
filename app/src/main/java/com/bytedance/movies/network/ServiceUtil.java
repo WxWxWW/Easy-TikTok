@@ -1,20 +1,13 @@
 package com.bytedance.movies.network;
 
-import android.text.TextUtils;
+import android.widget.Toast;
 
-import com.bytedance.movies.utils.LogUtil;
-import com.bytedance.movies.utils.StringUtils;
-
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.bytedance.movies.MoviesApplication;
+import com.bytedance.movies.base.utils.LogUtil;
+import com.bytedance.movies.base.utils.StringUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,7 +26,8 @@ public class ServiceUtil {
     private final String clientKey = "aw5x8c7fh8dcrwnz";
     private final String clientSecret = "d6f34af50b6f7de2cbf496c55c9e0f3b";
 
-    //十五天后失效
+    //用户授权后的获取的token
+    //十五天后失效,项目目前不需要对其进行处理，后期会修改
     private String auth_access_token = "act.503c2fbf102e5484ff2069e6b46a9b7ba4NaSrmtXhLi9kMJ9BZWReF8svn7";
     //用于刷新access_token,不推荐保存在本地，30天后失效
     private String refresh_token = "rft.ea42fad54685f58f82b08d412c8fac33IZsK9uFvFVHdf5DDhIE3la7QrrkJ";
@@ -54,6 +48,7 @@ public class ServiceUtil {
             .baseUrl(address)
             .build();
 
+    //全局唯一
     private static ServiceUtil serviceUtil;
     private ServiceUtil(){}
 
@@ -65,38 +60,47 @@ public class ServiceUtil {
 
     //获取client_token
     public synchronized String getClientToken(){
-         serviceUtil.retrofit.create(TokenService.class)
-                .getClientToken(clientKey, clientSecret,"client_credential")
-                .enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        try {
-                            String responseData = response.body().string();
-                            client_token = getFieldValueFromJson(responseData,"access_token");
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        t.printStackTrace();
-                    }
-                });
-         return client_token;
+        TokenService tokenService = retrofit.create(TokenService.class);
+        Call<ResponseBody> bodyCall = tokenService.getClientToken(clientKey, clientSecret,
+                "client_credential");
+            new Thread(() -> {
+                try {
+                Response<ResponseBody> execute = bodyCall.execute();
+                if(execute.isSuccessful()){
+                    client_token = StringUtils.getFieldValueFromJson(execute.body().string(),"access_token");
+                }else{
+                    Toast.makeText(MoviesApplication.getContext()
+                            , "client_token获取失败", Toast.LENGTH_SHORT).show();
+                }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    LogUtil.d("ServiceUtil.getClientToken","失败，出现异常IOException");
+                }
+            }).start();
+        return client_token;
+
+//        retrofit.create(TokenService.class)
+//                .getClientToken(clientKey, clientSecret,"client_credential")
+//                .enqueue(new Callback<ResponseBody>() {
+//                    @Override
+//                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                        try {
+//                            String responseData = response.body().string();
+//                            client_token = StringUtils.getFieldValueFromJson(responseData,"access_token");
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                    @Override
+//                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                        t.printStackTrace();
+//                    }
+//                });
+
     }
 
-    private String getFieldValueFromJson(String jsonStr, String fieldName) {
-        List<String> fieldValues = new ArrayList<>();
-        String regex = "(?<=(\"" + fieldName + "\":\")).*?(?=(\"))";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(jsonStr);
-        while (matcher.find()) {
-            if (!StringUtils.isBlank(matcher.group().trim())) {
-                fieldValues.add(matcher.group().trim());
-            }
-        }
-        return fieldValues.get(0);
-    }
+
+
 
     //对外网络接口
     public synchronized <T extends Object> T create(Class<T> serviceClass,boolean isConverter){
@@ -106,7 +110,10 @@ public class ServiceUtil {
             return retrofit.create(serviceClass);
     }
     //获取榜单数据
-    public synchronized String getMovieListData(Integer type,Integer version,boolean isConverter){
+//    public  String getMovieListData(Integer type,boolean isConverter){
+//
+//    }
+    public  String getMovieListData(Integer type,Integer version,boolean isConverter){
         if(version == null){
             serviceUtil.create(MoviesService.class,isConverter)
                     .getMoviesData(serviceUtil.getClientToken(),type)

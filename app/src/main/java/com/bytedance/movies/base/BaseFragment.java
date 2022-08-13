@@ -12,11 +12,6 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewbinding.ViewBinding;
 
-import com.bytedance.movies.utils.LogUtil;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.ParameterizedType;
-
 /**
  * @Classname BaseFragment
  * @Description: TODO

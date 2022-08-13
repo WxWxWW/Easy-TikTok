@@ -1,4 +1,4 @@
-package com.bytedance.movies;
+package com.bytedance.movies.douyindemo;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

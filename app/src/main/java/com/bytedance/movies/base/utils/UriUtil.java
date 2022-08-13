@@ -1,4 +1,4 @@
-package com.bytedance.movies.utils;
+package com.bytedance.movies.base.utils;
 
 
 import android.content.ContentResolver;
@@ -8,7 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-
+//官方demo中的uri工具类
 public class UriUtil {
 
     public static String convertUriToPath(Context context, Uri uri) {
@@ -83,7 +83,8 @@ public class UriUtil {
         Cursor cursor = context.getContentResolver().query(uri, null, selection, null, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
-                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+                int columnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
+                path = cursor.getString(columnIndex);
             }
 
             cursor.close();

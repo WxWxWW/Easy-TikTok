@@ -1,11 +1,11 @@
-package com.bytedance.movies.utils;
+package com.bytedance.movies.base.utils;
 
 import android.text.TextUtils;
 import android.util.Log;
 
 /**
- * @Classname LogUtils
- * @Description: TODO
+ * @Classname LogUtil
+ * @Description: 日志工具类
  * @Created by 康斯坦丁
  * @Date 2022/8/10 22:11
  */

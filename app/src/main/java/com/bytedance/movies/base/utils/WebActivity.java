@@ -1,4 +1,4 @@
-package com.bytedance.movies.utils;
+package com.bytedance.movies.base.utils;
 
 import androidx.annotation.NonNull;
 
@@ -37,7 +37,7 @@ public class WebActivity extends BaseActivity<BaseViewModel,ActivityWebBinding> 
             DouYinOpenApi douYinOpenApi = DouYinOpenApiFactory.create(this);
             Authorization.Request request = new Authorization.Request();
             request.scope = "trial.whitelist";
-            request.callerLocalEntry = "com.bytedance.movies.douyinapi.DouYinEntryActivity";
+            request.callerLocalEntry = "com.bytedance.movies.douyindemo.douyinapi.DouYinEntryActivity";
             douYinOpenApi.authorize(request);
         });
 

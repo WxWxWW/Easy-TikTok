@@ -1,153 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-    <LinearLayout
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <!--后期抖音功能-->
+        <ImageView
+            android:id="@+id/image_user"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentStart="true"
+            android:layout_margin="12dp"
+            android:src="@mipmap/plus" />
 
-        <TextView
-            android:id="@+id/title"
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="授权"
-            android:layout_marginTop="100dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+            <!--电影-->
+            <RadioButton
+                android:id="@+id/btn_movise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:button="@null"
+                android:gravity="center"
+                android:text="电影"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+            <!--电视剧-->
+            <RadioButton
+                android:id="@+id/btn_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:button="@null"
+                android:gravity="center"
+                android:text="电视剧"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+            <!--综艺-->
+            <RadioButton
+                android:id="@+id/btn_variety"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:button="@null"
+                android:gravity="center"
+                android:text="综艺"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+        </RadioGroup>
+        <!--后期抖音功能-->
+        <ImageView
+            android:id="@+id/btn_search"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="12dp"
+            android:src="@mipmap/search" />
+    </RelativeLayout>
+    <!--fragment数据展示-->
+    <FrameLayout
+        android:background="#00BCD4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
-        <Button
-            android:id="@+id/go_to_auth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="抖音授权"
-            android:layout_marginTop="20dp" />
-        <Button
-            android:id="@+id/require_mobile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="必选电话"
-            android:layout_marginTop="20dp" />
-        <Button
-            android:id="@+id/option_mobile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="可选电话"
-            android:layout_marginTop="20dp" />
-
-        <Button
-            android:id="@+id/is_support_mix_share_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="是否支持混合分享"/>
-
-        <Button
-            android:id="@+id/go_to_system_picture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/open_system_photo"
-            android:layout_marginTop="20dp" />
-
-        <Button
-            android:id="@+id/share_to_tiktok"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/share_to_aweme"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/go_to_system_picture"
-            android:visibility="gone"/>
-        <Button
-            android:id="@+id/share_to_contact"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="分享到联系人图片" />
-        <Button
-            android:id="@+id/share_to_contact_html"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="分享到联系人html"
-            />
-        <Button
-            android:id="@+id/open_record"
-            android:text="测试打开拍摄页"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:id="@+id/use_file_provider"
-            android:text="使用FileProvider"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content"/>
-
-
-
-        <Button
-            android:id="@+id/share_to_douyin_with_shareid_no_callback"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/share_to_aweme_with_shareid_no_callbacK"
-            android:visibility="gone"/>
-
-        <Button
-            android:id="@+id/microbutton"
-            android:layout_width="wrap_content"
-            android:text="分享携带小程序"
-            android:layout_height="wrap_content"
-            android:visibility="gone"/>
-
-        <Button
-            android:id="@+id/share_to_douyin_with_shareid_callback"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/share_to_aweme_with_shareid_callback"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/share_to_douyin_with_shareid_no_callback"
-            android:visibility="gone"/>
-
-        <EditText
-            android:id="@+id/set_default_hashtag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/set_default_title"
-            android:visibility="gone"/>
-
-        <EditText
-            android:id="@+id/set_default_hashtag1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="第二个默认话题"
-            android:visibility="gone"/>
-
-        <EditText
-            android:id="@+id/media_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/media_path"
-            android:textSize="16sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/set_default_hashtag"
-            android:visibility="gone"/>
-
-
-        <Button
-            android:id="@+id/clear_media"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/clear"
-            android:layout_marginRight="20dp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/media_text"
-            android:visibility="gone"/>
-
-    </LinearLayout>
-
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

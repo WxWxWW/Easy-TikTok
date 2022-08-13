@@ -1,8 +1,8 @@
-package com.bytedance.movies.bean;
+package com.bytedance.movies.database.bean;
 
 /**
  * @Classname TokenData
- * @Description: TODO
+ * @Description:
  * @Created by 康斯坦丁
  * @Date 2022/8/12 19:42
  */

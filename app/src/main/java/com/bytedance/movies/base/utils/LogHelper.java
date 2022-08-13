@@ -1,4 +1,4 @@
-package com.bytedance.movies.utils;
+package com.bytedance.movies.base.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

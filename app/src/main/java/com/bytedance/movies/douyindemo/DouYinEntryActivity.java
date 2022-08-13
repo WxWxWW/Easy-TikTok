@@ -1,15 +1,13 @@
-package com.bytedance.movies.douyinapi;
+package com.bytedance.movies.douyindemo;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.bytedance.movies.MainActivity;
 import com.bytedance.movies.R;
 import com.bytedance.movies.base.BaseActivity;
 import com.bytedance.movies.databinding.ActivityDouyindataBinding;
@@ -53,12 +51,6 @@ public class DouYinEntryActivity extends BaseActivity<BaseViewModel,ActivityDouy
         return BaseViewModel.class;
     }
 
-    @Override
-    protected void initData() {
-        getViewBinding().btnGetToken.setOnClickListener((View v) -> {
-
-        });
-    }
 
     @Override
     public void onReq(BaseReq req) {
@@ -70,7 +62,7 @@ public class DouYinEntryActivity extends BaseActivity<BaseViewModel,ActivityDouy
         if (resp.getType() == CommonConstants.ModeType.SHARE_CONTENT_TO_TT_RESP) {
             Share.Response response = (Share.Response) resp;
             Toast.makeText(this, " code：" + response.errorCode + " 文案：" + response.errorMsg, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, DemoMainActivity.class);
             startActivity(intent);
         } else if (resp.getType() == CommonConstants.ModeType.SEND_AUTH_RESPONSE) {
             Authorization.Response response = (Authorization.Response) resp;
