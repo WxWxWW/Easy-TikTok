@@ -36,7 +36,7 @@ public class Movie {
     //海报
     private String poster;
     private List<String> actors;
-    private List<String> areas;
+    private List<String> tags;
     private String id;
     private String maoyan_id;
     private String release_date;

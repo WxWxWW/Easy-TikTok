@@ -10,13 +10,16 @@
         <entry key="..\:/Easy-TikTok/app/src/main/res/drawable/selector_font_color.xml" value="0.35435897435897434" />
         <entry key="..\:/Easy-TikTok/app/src/main/res/drawable/selector_indicator.xml" value="0.35435897435897434" />
         <entry key="..\:/Easy-TikTok/app/src/main/res/drawable/shape_indicator.xml" value="0.35435897435897434" />
+        <entry key="..\:/Easy-TikTok/app/src/main/res/layout/activity_demomain.xml" value="0.34375" />
         <entry key="..\:/Easy-TikTok/app/src/main/res/layout/activity_douyindata.xml" value="0.3351449275362319" />
         <entry key="..\:/Easy-TikTok/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Easy-TikTok/app/src/main/res/layout/activity_show.xml" value="0.34375" />
+        <entry key="..\:/Easy-TikTok/app/src/main/res/layout/activity_show.xml" value="0.33" />
         <entry key="..\:/Easy-TikTok/app/src/main/res/layout/activity_web.xml" value="0.18385416666666668" />
         <entry key="..\:/Easy-TikTok/app/src/main/res/layout/fragment_blank.xml" value="0.34375" />
         <entry key="..\:/Easy-TikTok/app/src/main/res/layout/fragment_main_base.xml" value="0.34375" />
+        <entry key="..\:/Easy-TikTok/app/src/main/res/layout/fragment_show_base.xml" value="0.34375" />
         <entry key="..\:/Easy-TikTok/app/src/main/res/layout/item_main_base.xml" value="0.33" />
+        <entry key="..\:/Easy-TikTok/app/src/main/res/layout/item_variety.xml" value="0.25" />
       </map>
     </option>
   </component>

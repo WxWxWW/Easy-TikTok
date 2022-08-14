@@ -2,23 +2,18 @@ package com.bytedance.movies;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.bytedance.movies.base.BaseActivity;
 import com.bytedance.movies.base.BaseFragment;
 import com.bytedance.movies.base.BaseViewModel;
@@ -26,19 +21,16 @@ import com.bytedance.movies.base.utils.FileUtil;
 import com.bytedance.movies.base.utils.LogUtil;
 import com.bytedance.movies.base.utils.PageConstraints;
 import com.bytedance.movies.base.utils.StringUtils;
-import com.bytedance.movies.database.bean.Movie;
-import com.bytedance.movies.database.bean.Tv;
-import com.bytedance.movies.database.bean.Variety;
 import com.bytedance.movies.databinding.ActivityMainBinding;
-import com.bytedance.movies.databinding.ActivityWebBinding;
 import com.bytedance.movies.network.MoviesService;
 import com.bytedance.movies.network.ServiceUtil;
 import com.bytedance.movies.network.TokenService;
-import com.bytedance.movies.ui.TestFragment;
+import com.bytedance.movies.ui.MoviesFragment;
+import com.bytedance.movies.ui.TvsFragment;
+import com.bytedance.movies.ui.VarietiesFragment;
 import com.permissionx.guolindev.PermissionX;
 
 import java.io.IOException;
-import java.security.Permission;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -50,10 +42,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 //app的入口
-public class MainActivity extends BaseActivity<BaseViewModel, ActivityMainBinding> {
+public class MainActivity extends BaseActivity<BaseViewModel, ActivityMainBinding>
+        implements TvsFragment.TvsListener , MoviesFragment.MovieListener, VarietiesFragment.VarietiesListener {
 
 
     
@@ -80,7 +72,9 @@ public class MainActivity extends BaseActivity<BaseViewModel, ActivityMainBindin
             //通知fragment进行数据UI更新
             setTabLayout();
         });
+        getViewBinding().imageUser.setOnClickListener((v) -> {
 
+        });
     }
 
     private void getData() {
@@ -181,10 +175,16 @@ public class MainActivity extends BaseActivity<BaseViewModel, ActivityMainBindin
 
     private void setTabLayout() {
         String[] tabs = {"电 影","剧 集","综 艺"};
+        MoviesFragment moviesFragment = MoviesFragment.newInstance();
+        moviesFragment.setMoviesData(movies);
+        TvsFragment tvsFragment = TvsFragment.newInstance();
+        tvsFragment.setMoviesData(tvs);
+        VarietiesFragment varietiesFragment = VarietiesFragment.newInstance();
+        varietiesFragment.setMoviesData(varieties);
         List<BaseFragment> fragments = new ArrayList<>();
-        fragments.add(new TestFragment(movies));//电影
-        fragments.add(new TestFragment(tvs));//剧集
-        fragments.add(new TestFragment(varieties));//综艺
+        fragments.add(moviesFragment);//电影
+        fragments.add(tvsFragment);//剧集
+        fragments.add(varietiesFragment);//综艺
         for (String s: tabs) {
             getViewBinding().tabLayout.addTab(getViewBinding().tabLayout.newTab().setText(s));
         }
@@ -197,6 +197,7 @@ public class MainActivity extends BaseActivity<BaseViewModel, ActivityMainBindin
             @NonNull
             @Override
             public Fragment getItem(int position) {
+
                 return fragments.get(position);
             }
 
@@ -207,7 +208,9 @@ public class MainActivity extends BaseActivity<BaseViewModel, ActivityMainBindin
             }
         });
         getViewBinding().tabLayout.setupWithViewPager(getViewBinding().viewPage,false);
+
     }
+
 
     //获取授权
     private void grantPermission() {
@@ -254,5 +257,22 @@ public class MainActivity extends BaseActivity<BaseViewModel, ActivityMainBindin
     @Override
     protected Class<BaseViewModel> onViewModel() {
         return BaseViewModel.class;
+    }
+
+    @Override
+    public void sendValue(int value) {
+        if(value == 1){
+            Intent intent = new Intent(this,ShowActivity.class);
+            intent.putExtra("key",1);
+            startActivity(intent);
+        }else if(value == 2){
+            Intent intent = new Intent(this,ShowActivity.class);
+            intent.putExtra("key",2);
+            startActivity(intent);
+        }else{
+            Intent intent = new Intent(this,ShowActivity.class);
+            intent.putExtra("key",3);
+            startActivity(intent);
+        }
     }
 }

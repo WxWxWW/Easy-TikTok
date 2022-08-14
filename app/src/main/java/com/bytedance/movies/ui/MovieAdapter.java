@@ -30,6 +30,8 @@ public class MovieAdapter extends BaseAdapter<Movie, ItemMainBaseBinding> {
         return ItemMainBaseBinding.inflate(inflater,parent,false);
     }
 
+
+
     @Override
     protected void onBindViewHolder(ItemMainBaseBinding viewBinding, Movie item, int position) {
         viewBinding.itemMainNumber.setText(String.valueOf(position + 1));

@@ -1,5 +1,6 @@
 package com.bytedance.movies.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,16 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.bytedance.movies.ShowActivity;
 import com.bytedance.movies.base.BaseFragment;
 import com.bytedance.movies.base.BaseViewModel;
 import com.bytedance.movies.base.utils.FileUtil;
 import com.bytedance.movies.base.utils.PageConstraints;
 import com.bytedance.movies.database.bean.Movie;
 import com.bytedance.movies.databinding.FragmentMainBaseBinding;
-import com.bytedance.movies.douyindemo.DouYinEntryActivity;
 
 import java.util.List;
-import java.util.Objects;
 
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
@@ -30,12 +30,31 @@ import me.drakeet.multitype.MultiTypeAdapter;
  * @Created by 康斯坦丁
  * @Date 2022/8/14 8:53
  */
-public class TestFragment<T> extends BaseFragment<BaseViewModel, FragmentMainBaseBinding> {
+public class MoviesFragment<T> extends BaseFragment<BaseViewModel, FragmentMainBaseBinding> {
 
     private String moviesData;
 
-    public TestFragment(String moviesData) {
+    public MoviesFragment() {
+    }
+
+    public MoviesFragment(String moviesData) {
         this.moviesData = moviesData;
+    }
+
+
+    public void setMoviesData(String moviesData) {
+        this.moviesData = moviesData;
+    }
+
+    public interface MovieListener{
+        public void sendValue(int value);
+    }
+
+    private MovieListener myListener;
+
+    public static MoviesFragment newInstance() {
+        MoviesFragment fragment = new MoviesFragment();
+        return fragment;
     }
 
     @Override
@@ -51,9 +70,15 @@ public class TestFragment<T> extends BaseFragment<BaseViewModel, FragmentMainBas
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getViewBinding().btnFullView.setOnClickListener((v) -> {
-            startActivityForResult(new Intent(getActivity(), DouYinEntryActivity.class), PageConstraints.MOVIES);
+            myListener.sendValue(PageConstraints.MOVIES);
         });
         initRecyclerView();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        myListener = (MovieListener) getActivity();
     }
 
     private void initRecyclerView() {

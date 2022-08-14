@@ -30,4 +30,13 @@ public class StringUtils {
         }
         return fieldValues.get(0);
     }
+
+    public static String getString(List<String> list){
+        if(list == null) return null;
+        StringBuffer sb = new StringBuffer();
+        for(String s : list){
+            sb.append(s);
+        }
+        return sb.toString();
+    }
 }

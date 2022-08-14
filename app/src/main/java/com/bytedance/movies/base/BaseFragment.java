@@ -37,6 +37,7 @@ public abstract class BaseFragment<VM extends ViewModel,VB extends ViewBinding> 
 
     protected abstract VB onCreateViewBinding(@NonNull LayoutInflater inflater,@Nullable ViewGroup container);
 
+
     public VB getViewBinding() {
         return viewBinding;
     }
