@@ -1,5 +1,7 @@
 package com.bytedance.movies.network;
 
+import com.bytedance.movies.database.bean.ReqData;
+
 import java.util.List;
 
 import okhttp3.RequestBody;
@@ -29,6 +31,12 @@ public interface MoviesService {
     @GET("/discovery/ent/rank/item/")
     public Call<ResponseBody> getMoviesData(@Header("access-token") String accessToken,
                                            @Query("type") int type);
+
+
+    @Headers({"Content-Type: application/json"})
+    @GET("/discovery/ent/rank/item/")
+    public Call<ReqData> getMoviesReqData(@Header("access-token") String accessToken,
+                                       @Query("type") int type);
     //获取榜单版本
     @Headers({"Content-Type: application/json"})
     @GET("/discovery/ent/rank/version/")

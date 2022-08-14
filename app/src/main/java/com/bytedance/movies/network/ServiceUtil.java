@@ -22,20 +22,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @Date 2022/8/11 22:39
  */
 public class ServiceUtil {
-    private final String address = "https://open.douyin.com";
-    private final String clientKey = "aw5x8c7fh8dcrwnz";
-    private final String clientSecret = "d6f34af50b6f7de2cbf496c55c9e0f3b";
+    public final String address = "https://open.douyin.com";
+    public final String clientKey = "aw5x8c7fh8dcrwnz";
+    public final String clientSecret = "d6f34af50b6f7de2cbf496c55c9e0f3b";
+    public final String grantType = "client_credential";
 
     //用户授权后的获取的token
     //十五天后失效,项目目前不需要对其进行处理，后期会修改
-    private String auth_access_token = "act.503c2fbf102e5484ff2069e6b46a9b7ba4NaSrmtXhLi9kMJ9BZWReF8svn7";
+    private String authAccessToken = "act.503c2fbf102e5484ff2069e6b46a9b7ba4NaSrmtXhLi9kMJ9BZWReF8svn7";
     //用于刷新access_token,不推荐保存在本地，30天后失效
-    private String refresh_token = "rft.ea42fad54685f58f82b08d412c8fac33IZsK9uFvFVHdf5DDhIE3la7QrrkJ";
+    private String refreshToken = "rft.ea42fad54685f58f82b08d412c8fac33IZsK9uFvFVHdf5DDhIE3la7QrrkJ";
 
 
 
     //两小时刷新一次(获取之后5分钟内重新获取)
-    private String client_token = null;
+    private String clientToken = null;
     //获取的json数据
     private String Data = null;
     //格式解析
@@ -67,7 +68,7 @@ public class ServiceUtil {
                 try {
                 Response<ResponseBody> execute = bodyCall.execute();
                 if(execute.isSuccessful()){
-                    client_token = StringUtils.getFieldValueFromJson(execute.body().string(),"access_token");
+                    clientToken = StringUtils.getFieldValueFromJson(execute.body().string(),"access_token");
                 }else{
                     Toast.makeText(MoviesApplication.getContext()
                             , "client_token获取失败", Toast.LENGTH_SHORT).show();
@@ -77,7 +78,7 @@ public class ServiceUtil {
                     LogUtil.d("ServiceUtil.getClientToken","失败，出现异常IOException");
                 }
             }).start();
-        return client_token;
+        return clientToken;
 
 //        retrofit.create(TokenService.class)
 //                .getClientToken(clientKey, clientSecret,"client_credential")

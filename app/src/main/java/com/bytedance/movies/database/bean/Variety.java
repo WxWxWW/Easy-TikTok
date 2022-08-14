@@ -1,5 +1,7 @@
 package com.bytedance.movies.database.bean;
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
 import lombok.Data;
@@ -11,7 +13,7 @@ import lombok.Data;
  * @Date 2022/8/13 19:31
  */
 @Data
-public class VarietyList {
+public class Variety {
 
     //导演
     private List<String> directors;

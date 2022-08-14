@@ -20,65 +20,89 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentStart="true"
-            android:layout_margin="12dp"
-            android:src="@mipmap/plus" />
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            android:src="@mipmap/search" />
 
-        <RadioGroup
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            app:tabTextColor="@android:color/darker_gray"
+            app:tabSelectedTextColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal">
-            <!--电影-->
-            <RadioButton
-                android:id="@+id/btn_movise"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="12dp"
-                android:button="@null"
-                android:gravity="center"
-                android:text="电影"
-                android:textSize="16sp"
-                android:textStyle="normal" />
-            <!--电视剧-->
-            <RadioButton
-                android:id="@+id/btn_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:button="@null"
-                android:gravity="center"
-                android:text="电视剧"
-                android:textSize="16sp"
-                android:textStyle="normal" />
-            <!--综艺-->
-            <RadioButton
-                android:id="@+id/btn_variety"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="12dp"
-                android:button="@null"
-                android:gravity="center"
-                android:text="综艺"
-                android:textSize="16sp"
-                android:textStyle="normal" />
-        </RadioGroup>
+            android:layout_centerHorizontal="true" />
+<!--        <RadioGroup-->
+<!--            android:id="@+id/btn_group"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:orientation="horizontal">-->
+<!--            &lt;!&ndash;电影&ndash;&gt;-->
+<!--            <RadioButton-->
+<!--                android:id="@+id/btn_movise"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="12dp"-->
+<!--                android:button="@null"-->
+<!--                android:gravity="center"-->
+<!--                android:text="电影"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="normal" />-->
+<!--            &lt;!&ndash;电视剧&ndash;&gt;-->
+<!--            <RadioButton-->
+<!--                android:id="@+id/btn_tv"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="20dp"-->
+<!--                android:button="@null"-->
+<!--                android:gravity="center"-->
+<!--                android:text="电视剧"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="normal" />-->
+<!--            &lt;!&ndash;综艺&ndash;&gt;-->
+<!--            <RadioButton-->
+<!--                android:id="@+id/btn_variety"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="12dp"-->
+<!--                android:button="@null"-->
+<!--                android:gravity="center"-->
+<!--                android:text="综艺"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="normal" />-->
+<!--        </RadioGroup>-->
         <!--后期抖音功能-->
         <ImageView
             android:id="@+id/btn_search"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentEnd="true"
-            android:layout_margin="12dp"
-            android:src="@mipmap/search" />
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            android:src="@mipmap/refresh" />
     </RelativeLayout>
+
     <!--fragment数据展示-->
-    <FrameLayout
-        android:background="#00BCD4"
+<!--    <FrameLayout-->
+<!--        android:id="@+id/frameLayout"-->
+<!--        android:layout_margin="10dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />-->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_page"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginVertical="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

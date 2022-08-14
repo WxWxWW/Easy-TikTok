@@ -2,22 +2,23 @@ package com.bytedance.movies.database.bean;
 
 import java.util.List;
 
-/**
- * @Classname TVList
- * @Description: 电视剧榜单数据
- * @Created by 康斯坦丁
- * @Date 2022/8/13 19:31
- */
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
-public class TVList
-{
-    //演员
-    private List<String> actors;
+/**
+ * @Classname MovieList
+ * @Description: 电影榜单数据类
+ * @Created by 康斯坦丁
+ * @Date 2022/8/13 19:30
+ */
+@Data
+public class Movie {
+
     //导演
     private List<String> directors;
     //上映地区
     private List<String> ares;
-
     //讨论热度
     private int discussion_hot;
     //搜索热度
@@ -28,28 +29,16 @@ public class TVList
     private int hot;
     //影响热度
     private int influence_hot;
-
-    //影片ID
-    private String id;
-
     //中文名
     private String name;
     //英文名
     private String name_en;
-
     //海报
     private String poster;
-
-    //上映时间
+    private List<String> actors;
+    private List<String> areas;
+    private String id;
+    private String maoyan_id;
     private String release_date;
-
-    //类型标签
-    private List<String> tags;
-
-
+    private int type;
 }
-
-
-
-
-

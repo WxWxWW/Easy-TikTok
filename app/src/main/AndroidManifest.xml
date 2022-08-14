@@ -25,6 +25,7 @@
             android:exported="true"></service>
         <!--应用启动时的入口activity-->
         <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
