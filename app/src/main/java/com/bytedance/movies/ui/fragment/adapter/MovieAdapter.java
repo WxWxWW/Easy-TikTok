@@ -1,10 +1,12 @@
-package com.bytedance.movies.fragment.adapter;
+package com.bytedance.movies.ui.fragment.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -12,17 +14,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bytedance.entities.Movie;
 import com.bytedance.movies.R;
-import com.bytedance.movies.dao.MovieCacheDao;
+import com.bytedance.movies.databinding.MovieDetailViewBinding;
+import com.bytedance.movies.entities.Movie;
+import com.bytedance.movies.logic.dao.MovieCacheDao;
 
 import java.util.List;
-
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.NumberUtil;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
@@ -70,6 +71,7 @@ class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
     private Movie movie;
     private View rootView;
     private Object lock;
+    private AlertDialog detailDialog;
 
     public TextView getMovieHotImage() {
         return movieHotImage;
@@ -105,31 +107,44 @@ class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
         movieHot = (TextView) itemView.findViewById(R.id.movie_hot);
         movieBuy = (Button) itemView.findViewById(R.id.movie_buy);
         rootView = itemView;
+        rootView.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        System.out.println("click");
+        if(detailDialog==null){
+            MovieDetailViewBinding binder = DataBindingUtil.inflate(LayoutInflater.from(rootView.getContext()), R.layout.movie_detail_view, null, false);
+            binder.setMovie(movie);
+            detailDialog = new AlertDialog.Builder(rootView.getContext())
+                    .setPositiveButton("ok",null)
+                    .setView(binder.getRoot())
+                    .create();
+
+            //detailDialog.setContentView(binder.getRoot());
+        }
+        detailDialog.show();
     }
 
     public void init() {
         movieTitle.setText(movie.getName());
         List<String> areas = movie.getAreas();
-        movieDouban.setText(stringSplit(areas));
+        movieDouban.setText(movie.stringSplit(areas));
         List<String> tags = movie.getTags();
-        movieType.setText(stringSplit(tags));
+        movieType.setText(movie.stringSplit(tags));
         String date = movie.getRelease_date();
         if (date != null)
             movieYear.setText(date.substring(0, Math.min(4, date.length())));
         double v = movie.getHot();
-        movieHot.setText(readDouble(v));
+        movieHot.setText(movie.readDouble(v));
         MovieCacheDao dao = MovieCacheDao.newInstance(rootView.getContext(), "poster");
-        Drawable drawable = dao.getPosterByStringId(movie.getId(), movie.getPoster());
+        Drawable drawable = dao.getPosterById(movie.getId(), movie.getPoster());
         if (drawable != null) {
             movieImage.setImageDrawable(drawable);
         } else {
             new Handler().post(() -> {
                 Glide.with(rootView).load(movie.getPoster()).into(movieImage);
-                Drawable dw = dao.getPosterByStringId(movie.getId(), movie.getPoster());
+                Drawable dw = dao.getPosterById(movie.getId(), movie.getPoster());
                 if (dw != null) {
                     movieImage.setImageDrawable(dw);
                     Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
@@ -137,15 +152,13 @@ class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
                 }
             });
         }
-
-
     }
 
-    private String stringSplit(List<String> ls) {
+/*    private String stringSplit(List<String> ls) {
         if (ArrayUtil.isEmpty(ls)) return "";
         StringBuilder builder = new StringBuilder(ls.get(0));
         for (int i = 1; i < ls.size(); i++) {
-            builder.append(" / " + ls.get(i));
+            builder.append(" / ").append(ls.get(i));
         }
         return builder.toString();
     }
@@ -166,5 +179,5 @@ class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
         }
         if (v < 1) return String.format("%.2f%s", v, pw);
         return String.format("%.1f%s", v, pw);
-    }
+    }*/
 }

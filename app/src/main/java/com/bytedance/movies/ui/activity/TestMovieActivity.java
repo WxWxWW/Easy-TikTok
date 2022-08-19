@@ -1,4 +1,4 @@
-package com.bytedance.movies.activity;
+package com.bytedance.movies.ui.activity;
 
 import android.os.Bundle;
 
@@ -9,9 +9,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.bytedance.entities.Movie;
+import com.bytedance.movies.entities.Movie;
 import com.bytedance.movies.R;
-import com.bytedance.movies.fragment.MovieListFragment;
+import com.bytedance.movies.ui.fragment.MovieListFragment;
 
 import java.util.List;
 

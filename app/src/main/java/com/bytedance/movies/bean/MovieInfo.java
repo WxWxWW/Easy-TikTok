@@ -1,6 +1,6 @@
-package com.bytedance.bean;
+package com.bytedance.movies.bean;
 
-import com.bytedance.entities.Movie;
+import com.bytedance.movies.entities.Movie;
 
 import java.util.List;
 
@@ -103,4 +103,5 @@ class Extra
                 '}';
     }
 }
+
 

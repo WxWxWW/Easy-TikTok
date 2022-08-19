@@ -1,7 +1,6 @@
-package com.bytedance.movies.dao;
+package com.bytedance.movies.logic.dao;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -29,8 +28,8 @@ public class MovieCacheDao {
         return spDao;
     }
 
-    public Drawable getPosterByStringId(String id, String url) {
-        File file = new File(cachePath, id);
+    public Drawable getPosterById(Long id, String url) {
+        File file = new File(cachePath, ""+id);
         if (file.exists()) {
             if (file.length() == 0) {
                 System.out.println("cache err");
@@ -43,15 +42,15 @@ public class MovieCacheDao {
         }
     }
 
-    public void writePosterCache(String id, Drawable drawable) {
-        File file = new File(cachePath,id);
+    public void writePosterCache(Long id, Drawable drawable) {
+        File file = new File(cachePath,""+id);
         if(file.exists()) return;
         Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(file.getAbsolutePath());
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

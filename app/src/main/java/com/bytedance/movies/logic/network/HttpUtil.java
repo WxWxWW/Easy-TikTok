@@ -1,4 +1,4 @@
-package com.bytedance.movies.network;
+package com.bytedance.movies.logic.network;
 
 import java.util.Map;
 

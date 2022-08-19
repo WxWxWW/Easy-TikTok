@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Movies">
         <activity
-            android:name=".activity.TestMovieActivity"
+            android:name=".ui.activity.TestMovieActivity"
             android:exported="false" />
         <activity
             android:name=".douyinapi.DouYinEntryActivity"

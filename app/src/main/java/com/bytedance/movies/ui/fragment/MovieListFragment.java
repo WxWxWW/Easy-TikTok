@@ -1,4 +1,4 @@
-package com.bytedance.movies.fragment;
+package com.bytedance.movies.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.bytedance.entities.Movie;
+import com.bytedance.movies.entities.Movie;
 import com.bytedance.movies.R;
-import com.bytedance.movies.fragment.adapter.MovieAdapter;
+import com.bytedance.movies.ui.fragment.adapter.MovieAdapter;
 
 import java.io.Serializable;
 import java.util.List;

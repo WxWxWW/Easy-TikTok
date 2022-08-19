@@ -1,20 +1,29 @@
-package com.bytedance.entities;
+package com.bytedance.movies.entities;
+
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+import com.alibaba.fastjson.annotation.JSONField;
 
 import java.util.List;
 
+import cn.hutool.core.util.ArrayUtil;
+
+@Entity
 public class Movie
 {
+    @Ignore
     private List<String> actors;
-
+    @Ignore
     private List<String> areas;
-
+    @Ignore
     private List<String> directors;
-
     private Double discussion_hot;
-
     private Double hot;
-
-    private String id;
+    @PrimaryKey(autoGenerate = true)
+    private Long id;
 
     private Double influence_hot;
 
@@ -28,13 +37,17 @@ public class Movie
 
     private String release_date;
 
-    private String search_hot;
-
+    private Double search_hot;
+    @Ignore
     private List<String> tags;
 
-    private String topic_hot;
+    private Double topic_hot;
 
     private String type;
+
+    @Ignore
+    private Long time_stamp;
+
 
     public List<String> getActors() {
         return actors;
@@ -76,11 +89,11 @@ public class Movie
         this.hot = hot;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -132,11 +145,11 @@ public class Movie
         this.release_date = release_date;
     }
 
-    public String getSearch_hot() {
+    public Double getSearch_hot() {
         return search_hot;
     }
 
-    public void setSearch_hot(String search_hot) {
+    public void setSearch_hot(Double search_hot) {
         this.search_hot = search_hot;
     }
 
@@ -148,11 +161,11 @@ public class Movie
         this.tags = tags;
     }
 
-    public String getTopic_hot() {
+    public Double getTopic_hot() {
         return topic_hot;
     }
 
-    public void setTopic_hot(String topic_hot) {
+    public void setTopic_hot(Double topic_hot) {
         this.topic_hot = topic_hot;
     }
 
@@ -162,5 +175,45 @@ public class Movie
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Long getTime_stamp() {
+        return time_stamp;
+    }
+
+    public void setTime_stamp(Long time_stamp) {
+        this.time_stamp = time_stamp;
+    }
+
+    public String stringSplit(List<String> ls) {
+        if (ArrayUtil.isEmpty(ls)) return null;
+        StringBuilder builder = new StringBuilder(ls.get(0));
+        for (int i = 1; i < ls.size(); i++) {
+            builder.append(" / ").append(ls.get(i));
+        }
+        return builder.toString();
+    }
+
+    public String readDouble(Double v) {
+        if(v==null) return null;
+        String pw = "";
+        if (v > 1e11) {
+            v /= 1e12;
+            pw = "万亿";
+        } else if (v > 1e7) {
+            v /= 1e8;
+            pw = "亿";
+        } else if (v > 1e3) {
+            v /= 1e4;
+            pw = "万";
+        } else {
+            return "" + v;
+        }
+        if (v < 1) return String.format("%.2f%s", v, pw);
+        return String.format("%.0f%s", v, pw);
+    }
+    public String toString(Double d){
+        if(d==null) return null;
+        return String.format("%.0f",d);
     }
 }
